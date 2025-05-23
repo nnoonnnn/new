@@ -24,30 +24,21 @@
 // }
 // export default App;
 
-
 import "./App.css";
-
 
 import React, { useState, useEffect, createContext, useContext } from "react";
 import ReactDOM from "react-dom/client";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-} from "react-router-dom";
+import { HashRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
 
 // Create User Context
 const UserContext = createContext();
 
 function App() {
-  // Selected user state
   const [selectedUser, setSelectedUser] = useState(null);
 
   return (
     <UserContext.Provider value={{ selectedUser, setSelectedUser }}>
-      <BrowserRouter>
+      <HashRouter>
         <nav style={{ marginBottom: 20 }}>
           <Link to="/">User List</Link> | <Link to="/profile">Profile</Link>
         </nav>
@@ -55,7 +46,7 @@ function App() {
           <Route path="/" element={<UserList />} />
           <Route path="/profile" element={<UserProfile />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </UserContext.Provider>
   );
 }
@@ -65,7 +56,6 @@ function UserList() {
   const { setSelectedUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  // Fetch users on mount
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => res.json())
@@ -126,8 +116,8 @@ function UserProfile() {
     </div>
   );
 }
-export default App;
 
-
-// const root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(<App />);
+// Render your app into the root element
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+npm run build
